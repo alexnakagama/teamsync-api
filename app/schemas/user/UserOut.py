@@ -1,7 +1,8 @@
 from pydantic import BaseModel, EmailStr
 
-class UserDelete(BaseModel):
+class UserOut(BaseModel):
     email: EmailStr
     username: str
-    password: str
-    confirm_password: str
+    
+    class Config:
+        from_attributes = True 
