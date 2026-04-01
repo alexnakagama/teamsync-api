@@ -7,7 +7,7 @@ class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, index=True)
+    email = Column(String, index=True, unique=True)
     hashed_pw = Column(String)
     
     tasks = relationship(
