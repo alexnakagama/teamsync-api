@@ -9,7 +9,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String)
-    is_completed = Column(Boolean)
+    is_completed = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
     
     owner = relationship(

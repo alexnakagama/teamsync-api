@@ -1,6 +1,14 @@
-def main():
-    print("Hello from teamsync-api!")
+from fastapi import FastAPI
 
+from app.api.routers.users_router import users_router
 
-if __name__ == "__main__":
-    main()
+from app.db.database import Base, engine
+
+from app.models.user import User
+from app.models.task import Task
+
+app = FastAPI(title="TeamSync API")
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(users_router)
