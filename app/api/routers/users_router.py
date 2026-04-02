@@ -10,11 +10,11 @@ users_router = APIRouter(
     responses={404: {"description" : "Not found"}}
 )
 
-@users_router.post("register")
+@users_router.post("/register")
 async def register_user(db : Session = Depends(get_db)):
     pass
 
-@users_router.post("login")
+@users_router.post("/login")
 async def login_user(db: Session = Depends(get_db)):
     pass
 
