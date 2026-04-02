@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_db
 
 users_router = APIRouter(
-    prefix="/users",
+    prefix="users",
     tags=["users"],
     responses={404: {"description" : "Not found"}}
 )
