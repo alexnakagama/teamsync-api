@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from fastapi import HTTPException, status
 
-def register_user(db: Session, user_in: UserRegister) -> UserOut:
+def register_user_service(db: Session, user_in: UserRegister) -> UserOut:
     existing_user = db.query(User).filter(User.email == user_in.email).first()
     if existing_user:
         raise HTTPException(
@@ -32,7 +32,7 @@ def register_user(db: Session, user_in: UserRegister) -> UserOut:
     
     return UserOut.model_validate(new_user)
 
-def login_user(db: Session, user_in: UserLogin) -> dict:
+def login_user_service(db: Session, user_in: UserLogin) -> dict:
     existing_user = db.query(User).filter(User.email == user_in.email).first()
     if not existing_user:
         raise HTTPException(
