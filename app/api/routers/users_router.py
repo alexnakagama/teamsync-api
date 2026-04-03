@@ -9,6 +9,7 @@ from app.schemas.user.UserRegister import UserRegister
 from app.schemas.user.UserLogin import UserLogin
  
 from app.services.user_service import register_user_service, login_user_service
+from app.services.task_service import read_all_tasks_service
 
 users_router = APIRouter(
     prefix="/users",
@@ -26,4 +27,4 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
 
 @users_router.get("/tasks")
 async def read_all_tasks(db: Session = Depends(get_db), user = Depends(get_current_user)):
-    pass
+    return read_all_tasks_service(db, user)
