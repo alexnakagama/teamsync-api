@@ -9,6 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, index=True, unique=True)
+    role = Column(String, default="user")
     hashed_pw = Column(String)
     
     tasks = relationship(
