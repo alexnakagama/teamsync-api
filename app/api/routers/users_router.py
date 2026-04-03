@@ -19,7 +19,3 @@ async def register_user(db: Session = Depends(get_db)):
 @users_router.post("/login")
 async def login_user(db: Session = Depends(get_db)):
     pass
-
-@users_router.get("")
-async def read_tasks(db: Session = Depends(get_db)):
-    pass
