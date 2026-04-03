@@ -12,7 +12,7 @@ from app.schemas.user.UserLogin import UserLogin
 from app.services.user_service import register_user_service, login_user_service
 
 users_router = APIRouter(
-    prefix="users",
+    prefix="/users",
     tags=["users"],
     responses={404: {"description" : "Not found"}}
 )

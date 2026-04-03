@@ -18,12 +18,13 @@ def register_user_service(db: Session, user_in: UserRegister) -> UserOut:
             detail="The user already exists"
         )
     
+    password = user_in.password
     hashed_password = get_password_hash(user_in.password)
     
     new_user = User(
         email = user_in.email,
         username = user_in.username,
-        hashed_password = hashed_password
+        hashed_pw = hashed_password
     )
     
     db.add(new_user)
@@ -40,6 +41,7 @@ def login_user_service(db: Session, user_in: UserLogin) -> dict:
             detail="The user doesnt exists"
         )
     
+    password = user_in.password
     if not verify_password(user_in.password, existing_user.hashed_pw):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
