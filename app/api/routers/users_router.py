@@ -28,3 +28,7 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
 @users_router.get("/tasks")
 async def read_all_tasks(db: Session = Depends(get_db), user = Depends(get_current_user)):
     return read_all_tasks_service(db, user)
+
+@users_router.post("/create")
+async def create_task():
+    pass
