@@ -38,3 +38,11 @@ def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_
     if user is None:
         raise credentials_exception
     return user
+
+def manager_required(user = Depends(get_current_user)):
+    if user.role != "manager":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="You are not a manager, cant create tasks"
+        )
+    return user

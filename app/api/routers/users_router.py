@@ -3,13 +3,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_db, get_current_user
+from app.api.deps import get_db, get_current_user, manager_required
 
 from app.schemas.user.UserRegister import UserRegister
 from app.schemas.user.UserLogin import UserLogin
+from app.schemas.task.TaskCreate import TaskCreate
  
 from app.services.user_service import register_user_service, login_user_service
-from app.services.task_service import read_all_tasks_service
+from app.services.task_service import read_all_tasks_service, create_task_service
 
 users_router = APIRouter(
     prefix="/users",
@@ -30,5 +31,5 @@ async def read_all_tasks(db: Session = Depends(get_db), user = Depends(get_curre
     return read_all_tasks_service(db, user)
 
 @users_router.post("/create")
-async def create_task():
-    pass
+async def create_task(task: TaskCreate, db: Session = Depends(get_db), user = Depends(manager_required)):
+    return create_task_service(task, db, user)
