@@ -9,7 +9,7 @@ from app.schemas.user.UserRegister import UserRegister
 from app.schemas.user.UserLogin import UserLogin
 from app.schemas.task.TaskCreate import TaskCreate
  
-from app.services.user_service import register_user_service, login_user_service
+from app.services.user_service import register_user_service, login_user_service, read_account_info_service
 from app.services.task_service import read_all_tasks_service, create_task_service
 
 users_router = APIRouter(
@@ -33,3 +33,7 @@ async def read_all_tasks(db: Session = Depends(get_db), user = Depends(get_curre
 @users_router.post("/create")
 async def create_task(task: TaskCreate, db: Session = Depends(get_db), user = Depends(manager_required)):
     return create_task_service(task, db, user)
+
+@users_router.get("/me/{user_id}")
+async def read_account_info(user_id: int, db: Session = Depends(get_db), user = Depends(get_current_user)):
+    return read_account_info_service(db, user_id)

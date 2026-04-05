@@ -43,3 +43,12 @@ def login_user_service(db: Session, form_data: OAuth2PasswordRequestForm) -> dic
         "user": UserOut.model_validate(user)
     }
 
+def read_account_info_service(db: Session, user_id: int) -> UserOut:
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="An error ocurred"
+        )
+    return UserOut.model_validate(user)
+    
