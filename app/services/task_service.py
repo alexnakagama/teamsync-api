@@ -8,7 +8,7 @@ from app.models.user import User
 from app.schemas.task.TaskOut import TaskOut
 from app.schemas.task.TaskCreate import TaskCreate
 
-from app.api.deps import get_current_user, get_db
+from app.api.deps import get_current_user, get_db, manager_required
 
 def read_all_tasks_service(db: Session = Depends(get_db), user = Depends(get_current_user)):
     user_tasks = db.query(Task).filter(Task.owner_id == user.id).all()
@@ -39,3 +39,13 @@ def create_task_service(task_data: TaskCreate, db: Session = Depends(get_db), us
     db.refresh(new_task)
     return TaskOut.model_validate(new_task)
         
+def delete_task_service(task_id: int, db: Session = Depends(get_db), user = Depends(get_current_user)):
+    task_delete = db.query(Task).filter(Task.id == task_id).first()
+    if not task_delete:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The product wasnt found or it doenst exist"
+        )
+    db.delete(task_delete)
+    db.commit()
+    return {"message": "Task has been deleted"}

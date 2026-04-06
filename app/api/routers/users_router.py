@@ -30,10 +30,6 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
 async def read_all_tasks(db: Session = Depends(get_db), user = Depends(get_current_user)):
     return read_all_tasks_service(db, user)
 
-@users_router.post("/create")
-async def create_task(task: TaskCreate, db: Session = Depends(get_db), user = Depends(manager_required)):
-    return create_task_service(task, db, user)
-
 @users_router.get("/me/{user_id}")
 async def read_account_info(user_id: int, db: Session = Depends(get_db), user = Depends(get_current_user)):
     return read_account_info_service(db, user_id)
