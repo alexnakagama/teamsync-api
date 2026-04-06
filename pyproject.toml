@@ -14,4 +14,6 @@ dependencies = [
     "uvicorn>=0.42.0",
     "python-multipart>=0.0.22",
     "alembic>=1.18.4",
+    "slowapi>=0.1.9",
+    "psycopg2-binary>=2.9.11",
 ]
